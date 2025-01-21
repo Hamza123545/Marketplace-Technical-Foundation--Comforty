@@ -15,7 +15,7 @@ Day 2: Technical Documentation
 
 **Day 2: Technical Documentation**
 
-On Day 2, we created the technical documentation outlining the structure and technologies that would be used to build the website. We specified:
+On Day 2, we created the technical documentation outlining the structure and technologies that would be used to build the website. We specified: 
 •	Frontend: Next.js with TypeScript and Tailwind CSS
 •	Backend: Sanity CMS for managing content
 •	APIs: Integration with third-party APIs for shipment tracking and payment processing (static at the moment)
