@@ -2,7 +2,14 @@
 
 import React from "react";
 import { Bar } from "react-chartjs-2";
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip } from "chart.js";
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Tooltip,
+} from "chart.js";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip);
 
@@ -62,7 +69,7 @@ const AnalyticsDashboard = () => {
         text: "Monthly Sales Overview",
         font: {
           size: 18,
-          weight: "bold",
+          weight: "bold" as "bold", // Ensure compatibility with Chart.js types
         },
         color: "#2D3748", // Dark gray
       },
@@ -199,9 +206,8 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
 
-        {/* Chart Section */}
+        {/* Bar Chart Section */}
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold mb-6 text-[#2D3748]">Sales Chart</h2>
           <Bar data={data} options={options} />
         </div>
       </div>

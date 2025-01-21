@@ -1,7 +1,10 @@
+"use client";
+
 import { ShoppingCart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { groq } from "next-sanity";
 import { client } from "@/sanity/lib/client";
 
@@ -63,44 +66,44 @@ const ProductCard = ({ product }: { product: Product }) => (
   </div>
 );
 
-export default async function AllProduct() {
-  // GROQ query to fetch 9 products from Sanity
-  const query = groq`*[_type == "products"][1..8] {
-    _id,
-    title,
-    price,
-    "imageUrl": image.asset->url, // Resolve image URL
-    originalPrice,
-    isNew,
-    isSale
-  }`;
+export default function AllProduct() {
+  const [products, setProducts] = useState<Product[]>([]);
 
-  // Fetch products from Sanity
-  const products: Product[] = await client.fetch(query);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const query = groq`*[_type == "products"][1..8] {
+        _id,
+        title,
+        price,
+        "imageUrl": image.asset->url, 
+        originalPrice,
+        isNew,
+        isSale
+      }`;
 
-  // Fetch a new chair product (assuming a chair with a unique title such as "ComfyChair")
-  const newChairQuery = groq`*[_type == "products" && title == "ComfyChair"][1] {
-    _id,
-    title,
-    price,
-    "imageUrl": image.asset->url, 
-    originalPrice,
-    isNew,
-    isSale
-  }`;
+      const data: Product[] = await client.fetch(query);
+      setProducts(data);
 
-  // Fetch the new chair product
-  const newChair: Product | null = await client.fetch(newChairQuery);
+      // Fetching the new chair product
+      const newChairQuery = groq`*[_type == "products" && title == "ComfyChair"][1] {
+        _id,
+        title,
+        price,
+        "imageUrl": image.asset->url, 
+        originalPrice,
+        isNew,
+        isSale
+      }`;
 
-  // If the new chair is found, add it to the list; if not, just use the original products
-  const allProducts = newChair ? [...products, newChair] : products;
+      const newChair = await client.fetch(newChairQuery);
 
-  // Remove duplicates by ensuring each product has a unique _id
-  const uniqueProducts = Array.from(
-    new Map(
-      allProducts.map((product) => [product._id, product]) // Ensure unique products based on _id
-    ).values()
-  );
+      if (newChair) {
+        setProducts((prevProducts) => [...prevProducts, newChair]);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-20">
@@ -108,7 +111,7 @@ export default async function AllProduct() {
         Our Products
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {uniqueProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>

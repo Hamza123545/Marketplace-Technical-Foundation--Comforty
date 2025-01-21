@@ -21,14 +21,20 @@ const Navbar = () => {
 
   // Fetch products based on search query
   const fetchProducts = async (query: string) => {
-    const searchQuery = groq`*[_type == "products" && title match $query] {
+    const searchQuery = groq`*[_type == "products" && title match $search] {
       _id,
       title,
       price,
       "imageUrl": image.asset->url
     }`;
-    const results = await client.fetch(searchQuery, { query: `*${query}*` });
-    setSearchResults(results);
+
+    try {
+      // Pass the parameter as an object with the correct key
+      const results = await client.fetch(searchQuery, { search: `${query}*` });
+      setSearchResults(results);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
   };
 
   // Handle search input
@@ -147,9 +153,7 @@ const Navbar = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d={
-                  isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
-                }
+                d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
               />
             </svg>
           </button>

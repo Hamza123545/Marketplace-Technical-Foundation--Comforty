@@ -1,7 +1,10 @@
+"use client";
+
 import { ShoppingCart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { groq } from "next-sanity";
 import { client } from "@/sanity/lib/client";
 
@@ -17,24 +20,31 @@ interface Product {
   tags?: string[];
 }
 
-export default async function OurProduct() {
-  // GROQ query to fetch the first 9 products from Sanity (ensure unique)
-  const query = groq`*[_type == "products"][0..8] { // Adjusted to fetch 9 products
-    _id,
-    title,
-    price,
-    priceWithoutDiscount,
-    "imageUrl": image.asset->url, // Resolve image URL
-    badge,
-    description,
-    inventory,
-    tags
-  }`;
+export default function OurProduct() {
+  const [products, setProducts] = useState<Product[]>([]);
 
-  // Fetch products data from Sanity
-  const products: Product[] = await client.fetch(query);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const query = groq`*[_type == "products"][0..8] {
+        _id,
+        title,
+        price,
+        priceWithoutDiscount,
+        "imageUrl": image.asset->url, // Resolve image URL
+        badge,
+        description,
+        inventory,
+        tags
+      }`;
 
-  // Remove duplicate products by title or imageUrl (whichever is appropriate)
+      const data: Product[] = await client.fetch(query);
+      setProducts(data);
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Remove duplicate products by title (adjust logic as needed)
   const uniqueProducts = Array.from(
     new Map(products.map((product) => [product.title, product])).values()
   );

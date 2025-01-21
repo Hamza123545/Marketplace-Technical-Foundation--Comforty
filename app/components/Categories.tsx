@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { groq } from "next-sanity";
 import { client } from "@/sanity/lib/client";
 
@@ -10,17 +13,25 @@ interface Category {
   products: number;
 }
 
-export default async function Categories() {
-  // GROQ query to fetch categories
-  const query = groq`*[_type == "categories"] {
-    _id,
-    title,
-    "imageUrl": image.asset->url, // Resolve image URL
-    products
-  }`;
+export default function Categories() {
+  const [categories, setCategories] = useState<Category[]>([]);
 
   // Fetch categories data from Sanity
-  const categories: Category[] = await client.fetch(query);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const query = groq`*[_type == "categories"] {
+        _id,
+        title,
+        "imageUrl": image.asset->url, // Resolve image URL
+        products
+      }`;
+
+      const data: Category[] = await client.fetch(query);
+      setCategories(data);
+    };
+
+    fetchCategories();
+  }, []);
 
   return (
     <section className="w-full px-4 py-[7rem] md:px-6">
