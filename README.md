@@ -16,13 +16,27 @@ Day 2: Technical Documentation
 **Day 2: Technical Documentation**
 
 On Day 2, we created the technical documentation outlining the structure and technologies that would be used to build the website. We specified: 
+
+
+
+
 •	Frontend: Next.js with TypeScript and Tailwind CSS
+
+
+
 
 
 •	Backend: Sanity CMS for managing content
 
 
+
+
+
+
 •	APIs: Integration with third-party APIs for shipment tracking and payment processing (static at the moment)
+
+
+
 
 
 The documentation also detailed the workflow for data fetching and API integration, as well as how the content would be handled in Sanity.
@@ -33,7 +47,15 @@ The documentation also detailed the workflow for data fetching and API integrati
 **Day 3: API Integration**
 
 On Day 3, we focused on integrating the APIs. We fetched data from external APIs and used Sanity as our content management system. The APIs helped us display product information dynamically:
+
+
+
+
+
 •	Sanity API: Fetching data from Sanity for product details.
+
+
+
 
 
 •	External APIs: Data fetching from a mock API (e.g., FakeStoreAPI) for dynamic product listings. We were able to successfully display this data on the website via Next.js API routes.
@@ -45,6 +67,10 @@ On Day 3, we focused on integrating the APIs. We fetched data from external APIs
 **Day 4: Adding Key Features**
 
 Day 4 was dedicated to implementing key features that enhanced user experience:
+
+
+
+
 •	Product Comparison: A dynamic product comparison feature for users to compare multiple products based on various attributes.
 
 
@@ -81,6 +107,10 @@ On Day 5, we thoroughly tested the marketplace using the Lighthouse tool. We che
 **Day 6: Deployment to Vercel**
 
 On Day 6, we deployed the project to Vercel, ensuring that all environment variables were correctly set up. We handled:
+
+
+
+
 •	Vercel Deployment: Pushed the code to Vercel for production.
 
 
