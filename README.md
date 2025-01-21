@@ -17,8 +17,14 @@ Day 2: Technical Documentation
 
 On Day 2, we created the technical documentation outlining the structure and technologies that would be used to build the website. We specified: 
 •	Frontend: Next.js with TypeScript and Tailwind CSS
+
+
 •	Backend: Sanity CMS for managing content
+
+
 •	APIs: Integration with third-party APIs for shipment tracking and payment processing (static at the moment)
+
+
 The documentation also detailed the workflow for data fetching and API integration, as well as how the content would be handled in Sanity.
 
 
@@ -28,6 +34,8 @@ The documentation also detailed the workflow for data fetching and API integrati
 
 On Day 3, we focused on integrating the APIs. We fetched data from external APIs and used Sanity as our content management system. The APIs helped us display product information dynamically:
 •	Sanity API: Fetching data from Sanity for product details.
+
+
 •	External APIs: Data fetching from a mock API (e.g., FakeStoreAPI) for dynamic product listings. We were able to successfully display this data on the website via Next.js API routes.
 
 
@@ -38,10 +46,24 @@ On Day 3, we focused on integrating the APIs. We fetched data from external APIs
 
 Day 4 was dedicated to implementing key features that enhanced user experience:
 •	Product Comparison: A dynamic product comparison feature for users to compare multiple products based on various attributes.
+
+
 •	Dynamic Routing: Implemented dynamic routing to allow users to access product details, category pages, and more.
+
+
+
 •	Product Details Page: A page displaying detailed information about each product.
+
+
+
 •	Checkout Page: Users could add products to the cart and proceed to checkout.
+
+
+
 •	Order Page: A page that shows the user's order history.
+
+
+
 •	Analytics Page: A page showing important insights about the marketplace's performance (e.g., best-selling products).
 
 
@@ -60,7 +82,13 @@ On Day 5, we thoroughly tested the marketplace using the Lighthouse tool. We che
 
 On Day 6, we deployed the project to Vercel, ensuring that all environment variables were correctly set up. We handled:
 •	Vercel Deployment: Pushed the code to Vercel for production.
+
+
+
 •	Sanity Cross-Origin: Configured cross-origin settings to allow the integration between Sanity CMS and our website.
+
+
+
 •	Environment Variables: Ensured all necessary environment variables were added to Vercel's settings.
 
 
@@ -78,11 +106,29 @@ ________________________________________
 **Technologies Used**
 
 •	Next.js (Frontend Framework)
+
+
+
 •	TypeScript (For type safety)
+
+
+
 •	Sanity CMS (Backend content management)
+
+
+
 •	Tailwind CSS (Styling)
+
+
+
 •	Vercel (Deployment platform)
+
+
+
 •	Lighthouse (Performance Testing)
+
+
+
 •	Third-Party APIs (To be integrated for dynamic shipment tracking and payment processing in the future)
 ________________________________________
 
@@ -91,8 +137,18 @@ ________________________________________
 **Future Plans**
 
 •	Dynamic Shipment Tracking: Implement real-time shipment tracking using third-party APIs.
+
+
+
+
 •	Payment Processing: Integrate a payment gateway to allow secure transactions.
+
+
+
 •	Enhanced Analytics: Provide more detailed analytics and insights to marketplace admins.
+
+
+
 •	User Authentication: Add user sign-up/sign-in functionality.
 ________________________________________
 
