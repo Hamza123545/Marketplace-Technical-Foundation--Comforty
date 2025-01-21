@@ -5,8 +5,8 @@ import Image from "next/image";
 import { groq } from "next-sanity";
 import { useCart } from "@/app/context/CartContext";
 import { useWishlist } from "@/app/context/WishlistContext";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
 
 type Product = {
   _id: string;
@@ -20,9 +20,14 @@ type Product = {
   discount?: { percentage: number; code: string };
 };
 
-export default function ProductDetail({ params }: { params: { id: string } }) {
-  const productId = React.use(params).id;
+type ProductDetailProps = {
+  params: {
+    id: string;
+  };
+};
 
+export default function ProductDetail({ params }: ProductDetailProps) {
+  const { id } = params; // Extract params directly from props
   const { addToCart } = useCart();
   const { addToWishlist } = useWishlist();
   const router = useRouter();
@@ -33,26 +38,28 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   // Fetch product data and discount data
   useEffect(() => {
     const fetchProduct = async () => {
-      const query = groq`*[_type == "products" && _id == $id][0] {
-        _id,
-        title,
-        price,
-        "imageUrl": image.asset->url,
-        originalPrice,
-        isNew,
-        isSale,
-        description,
-        "discount": *[_type == "discounts" && $id in applicableProducts[]->_id][0] {
-          percentage,
-          code
-        }
-      }`;
-      const fetchedProduct = await client.fetch(query, { id: productId });
-      setProduct(fetchedProduct);
+      if (id) {
+        const query = groq`*[_type == "products" && _id == $id][0] {
+          _id,
+          title,
+          price,
+          "imageUrl": image.asset->url,
+          originalPrice,
+          isNew,
+          isSale,
+          description,
+          "discount": *[_type == "discounts" && $id in applicableProducts[]->_id][0] {
+            percentage,
+            code
+          }
+        }`;
+        const fetchedProduct = await client.fetch(query, { id });
+        setProduct(fetchedProduct);
+      }
     };
 
     fetchProduct();
-  }, [productId]);
+  }, [id]);
 
   // Add to cart and wishlist
   const handleAddToCart = () => {
@@ -186,27 +193,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             className="text-blue-600 hover:text-blue-800"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10 2a8 8 0 00-8 8c0 4.418 3.582 8 8 8s8-3.582 8-8a8 8 0 00-8-8zM9 4h2v2h-2V4zm1 6.021c-2.286 0-3.021 1.556-3.021 2.42 0 .56.226 1.401.77 1.568l.253.13h1.897v3.242h-3.132c-.351 0-.667-.254-.713-.593-.057-.396-.084-.665-.084-.907 0-.69.437-1.676 1.122-2.02.118-.074.266-.148.438-.222-.011-.215-.035-.426-.035-.625-.001-.407.02-.688.031-.907-.127-.11-.284-.258-.484-.378-.5-.239-.994-.413-1.422-.522-.337-.073-.649-.057-.95-.066-.409-.013-.72.324-.754.73-.067.437.194.728.435 1.05 1.286 1.276 3.415 2.132 5.682.058-.186-.364-.651-.679-1.03-.995z" />
-            </svg>
-          </a>
-          <a
-            href={`https://twitter.com/intent/tweet?url=${window.location.href}&text=Check out this product`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-400 hover:text-blue-600"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M18 2c-1.532 0-2.98.451-4.22 1.212a7.963 7.963 0 00-1.72-.214c-1.602 0-3.123.621-4.24 1.728a8.003 8.003 0 00-4.15 4.35 8.058 8.058 0 001.35-.078A4.01 4.01 0 0110 6.25c-1.582 0-2.927.786-3.734 1.978.118.102.268.155.414.264-.348.378-.675.76-.934 1.148.083-.003.171-.013.257-.022.146.078.333.13.49.214-.248.355-.432.739-.54 1.14-.445-.169-.893-.379-1.396-.62-.09.101-.159.205-.243.31 0 .022-.01.043-.01.066-.506.02-.929.426-.929.916v3.492a7.98 7.98 0 001.172.672 7.72 7.72 0 004.642.513c-.012-.052.095-.094.087-.155-.043.079-.074.158-.119.235z" />
-            </svg>
-          </a>
-          <a
-            href={`https://wa.me/?text=Check%20out%20this%20product:%20${product.title}%20at%20${window.location.href}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-green-600 hover:text-green-800"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M16 2a4 4 0 00-4 4v8a4 4 0 008 0V6a4 4 0 00-4-4zm-1 12a3 3 0 11-6 0 3 3 0 016 0zm-1 0c0 1.308-.837 2-2 2s-2-.692-2-2 1.336-2 2-2 2 .692 2 2zM12 4c0 1.308-1.675 2-3 2s-3-.692-3-2 1.675-2 3-2 3 .692 3 2z" />
+              <path d="M10 2a8 8 0 00-8 8c0 4.418 3.582 8 8 8s8-3.582 8-8a8 8 0 00-8-8zM9 4h2v2h-2V4zm1 6.021c-2.286 0-3.021 1.556-3.021 2.42 0 .56.226 1.401.77 1.568l.253.13h1.897v3.242h-3.132c-.351 0-.667-.254-.713-.593-.057-.396-.084-.665-.084-.907 0-.69.437-1.676 1.122-2.02.118-.074.266-.148.438-.222-.011-.215-.035-.426-.035-.625-.001-.407.02-.688.031-.907-.127-.11-.284-.258-.484-.378-.5-.239-.994-.413-1.422-.522-.337-.073-.649-.057-.95-.066-.409-.013-.72.324-.754.73-.067.437.194.728.435 1.05 1.755.375 3.134.784 4.393 1.237-.495-.479-.593-.857-.92-.625z" />
             </svg>
           </a>
         </div>
