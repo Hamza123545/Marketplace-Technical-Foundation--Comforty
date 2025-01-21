@@ -84,6 +84,9 @@ const Navbar = () => {
           <Link href="/productComparision" className="text-[14px] font-medium">
             Product Comparision
           </Link>
+          <Link href="/analyticsDashboard" className="text-[14px] font-medium">
+          Analytics Dashboard
+          </Link>
         </div>
 
         {/* Desktop Search Bar and Contact Info */}
