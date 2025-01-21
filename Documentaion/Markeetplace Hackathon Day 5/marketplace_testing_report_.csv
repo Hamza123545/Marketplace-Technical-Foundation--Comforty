@@ -1,0 +1,8 @@
+Test Case ID,Description,Steps,Expected Result,Actual Result,Status,Severity,Remarks
+TC001,Product Listing Test,"Open homepage, verify products",Products display correctly,Products display correctly,Passed,Low,No issues found
+TC002,Search Functionality Test,"Search for a product, verify results",Relevant products displayed,Relevant products displayed,Passed,Medium,Test passed under multiple queries
+TC003,Add to Cart Test,"Add product to cart, verify cart",Product added to cart,Product added to cart,Passed,High,Cart functionality works as expected
+TC004,Fallback UI Test,"Trigger API error, verify UI","""No products available"" message displayed","""No products available"" message displayed",Passed,Medium,Fallback UI works correctly
+TC005,Cross-Browser Test,"Test on Chrome, Firefox, Safari",Consistent rendering and functionality,Consistent rendering and functionality,Passed,Low,Have some responsive issues
+TC006,Performance Test (Lighthouse),Run Lighthouse audit,Performance score > 64,Performance score: 64,Passed,High,Page load time improved
+TC007,Static Order Page Test,"Navigate to order page, verify data",Static order details displayed,Static order details displayed,Passed,Medium,Order page is dynamic but static data is used
