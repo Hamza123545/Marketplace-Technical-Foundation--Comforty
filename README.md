@@ -27,7 +27,7 @@ The documentation also detailed the workflow for data fetching and API integrati
 On Day 3, we focused on integrating the APIs. We fetched data from external APIs and used Sanity as our content management system. The APIs helped us display product information dynamically:
 
 - **Sanity API**: Fetching data from Sanity for product details 📦.
-- **External APIs**: Data fetching from a mock API (e.g., FakeStoreAPI) for dynamic product listings 🌐. We were able to successfully display this data on the website via Next.js API routes.
+- **External APIs**: Data fetching from a 3rd party api into our Sanity.
 
 ---
 
